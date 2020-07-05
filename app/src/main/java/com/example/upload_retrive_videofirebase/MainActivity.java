@@ -12,12 +12,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -26,11 +28,15 @@ import com.google.firebase.storage.UploadTask;
 public class MainActivity extends AppCompatActivity {
 
     Button recordbtn,uploadbtn;
+
     StorageReference storageRefrence;
-    Uri uri;
     FirebaseAuth firebaseAuth;
-    ProgressDialog progressDialog;
+    DatabaseReference databaseReference;
     ProgressBar progressBar;
+
+    Member member;
+
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +46,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         recordbtn = findViewById(R.id.record);
         uploadbtn = findViewById(R.id.upload);
-        progressDialog =new ProgressDialog(this);
-        progressDialog.setMessage("Please Wait....");
-        progressDialog.setCancelable(false);
         progressBar = (ProgressBar) findViewById(R.id.bar);
+
         //String uid = firebaseAuth.getCurrentUser().getUid();
 
      /*   if (firebaseAuth.getCurrentUser()!=null){
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
             StorageReference storageRef =
                     FirebaseStorage.getInstance().getReference();
-            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser() + "/userIntro2.3gp");
+            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser().getUid() + "/userIntro2.3gp");
 
         }
     }

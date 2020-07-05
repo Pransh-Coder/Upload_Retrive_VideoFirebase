@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class PhoneAuthentication extends AppCompatActivity {
 
     EditText enterMobileNumber;
     Button submit;
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,7 @@ public class PhoneAuthentication extends AppCompatActivity {
 
         enterMobileNumber = findViewById(R.id.phn_veri);
         submit = findViewById(R.id.submit);
+        firebaseAuth=FirebaseAuth.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,5 +40,15 @@ public class PhoneAuthentication extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(PhoneAuthentication.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
