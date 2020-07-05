@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         recordbtn = findViewById(R.id.record);
         uploadbtn = findViewById(R.id.upload);
         progressBar = (ProgressBar) findViewById(R.id.bar);
-
+        member = new Member();
+        storageRefrence = FirebaseStorage.getInstance().getReference("Video");
+        databaseReference = FirebaseDatabase.getInstance().getReference("video");
         //String uid = firebaseAuth.getCurrentUser().getUid();
 
      /*   if (firebaseAuth.getCurrentUser()!=null){
@@ -69,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         uploadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+                UploadVideo();
+                /*progressBar.setVisibility(View.VISIBLE);
                 //progressBar.setProgress((int) progress);
                 if (uri != null) {
                     UploadTask uploadTask = storageRefrence.putFile(uri);
@@ -91,18 +95,18 @@ public class MainActivity extends AppCompatActivity {
                                     Log.e("Upload complete",taskSnapshot.toString());
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
-                            });/*.addOnProgressListener(
+                            });*//*.addOnProgressListener(
                             new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                                     updateProgress(taskSnapshot);
                                 }
-                            });*/
+                            });*//*
                 }
                 else {
                     Toast.makeText(MainActivity.this, "Nothing to upload",
                             Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
         });
     }
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
             StorageReference storageRef =
                     FirebaseStorage.getInstance().getReference();
-            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser().getUid() + "/userIntro2.3gp");
+            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser().getUid() + "/userIntro.3gp");
 
         }
     }
@@ -134,5 +138,39 @@ public class MainActivity extends AppCompatActivity {
 
         //progressBar = (ProgressBar) findViewById(R.id.bar);
         //progressBar.setProgress((int) progress);
+    }
+
+    //Better way to Upload video as we are pushing keys in database as well
+    public void UploadVideo(){
+        final String vidname = "t2";
+        if (uri != null&&vidname!=null){
+            progressBar.setVisibility(View.VISIBLE);
+            StorageReference reference = storageRefrence.child(System.currentTimeMillis()+vidname);
+            UploadTask uploadTask2 = reference.putFile(uri);
+
+            uploadTask2.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this,
+                            "Upload failed: " + e.getLocalizedMessage(),
+                            Toast.LENGTH_LONG).show();
+
+                }
+            }).addOnSuccessListener(
+                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(MainActivity.this, "Upload complete",
+                                    Toast.LENGTH_LONG).show();
+                            Log.e("Upload complete",taskSnapshot.toString());
+                            progressBar.setVisibility(View.INVISIBLE);
+
+                            member.setName(vidname);
+                            member.setVideoUri(uri.toString());
+                            String i = databaseReference.push().getKey();
+                            databaseReference.child(i).setValue(member);
+                        }
+                    });
+        }
     }
 }
