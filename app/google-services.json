@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "800835944274",
+    "firebase_url": "https://pransh-rastogi.firebaseio.com",
+    "project_id": "pransh-rastogi",
+    "storage_bucket": "pransh-rastogi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800835944274:android:3a26ca5105674dd20c048b",
+        "android_client_info": {
+          "package_name": "com.example.jsonpractise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNKJ6EAPoGeukwHXTrYvO0Tsk3S534t5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800835944274:android:f4ea282a6abb8b400c048b",
+        "android_client_info": {
+          "package_name": "com.example.sustainhillreap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNKJ6EAPoGeukwHXTrYvO0Tsk3S534t5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800835944274:android:d2f31cb41b20a8b40c048b",
+        "android_client_info": {
+          "package_name": "com.example.upload_retrive_videofirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNKJ6EAPoGeukwHXTrYvO0Tsk3S534t5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800835944274-5nqr39ociergc09nv4lg2bid5s5vuunk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
