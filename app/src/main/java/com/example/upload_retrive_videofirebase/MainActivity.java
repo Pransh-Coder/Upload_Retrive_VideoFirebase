@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -28,7 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button recordbtn,uploadbtn;
+    Button recordbtn,uploadbtn,showdata;
 
     StorageReference storageRefrence;
     FirebaseAuth firebaseAuth;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         recordbtn = findViewById(R.id.record);
         uploadbtn = findViewById(R.id.upload);
         progressBar = (ProgressBar) findViewById(R.id.bar);
+        showdata = findViewById(R.id.showData);
         member = new Member();
         storageRefrence = FirebaseStorage.getInstance().getReference("Video");
         databaseReference = FirebaseDatabase.getInstance().getReference("video");
@@ -107,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Nothing to upload",
                             Toast.LENGTH_LONG).show();
                 }*/
+            }
+        });
+        showdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,ShowData.class);
+                startActivity(intent);
             }
         });
     }
@@ -172,5 +182,22 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.logout){
+            // do something
+            firebaseAuth.signOut();
+            Intent intent = new Intent(MainActivity.this,PhoneAuthentication.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
