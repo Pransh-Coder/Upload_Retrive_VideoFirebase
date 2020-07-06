@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Uri uri;
 
     VideoView videoView;
+    MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         member = new Member();
         storageRefrence = FirebaseStorage.getInstance().getReference("Video");
         databaseReference = FirebaseDatabase.getInstance().getReference("video");
+        mediaController= new MediaController(this);
         //String uid = firebaseAuth.getCurrentUser().getUid();
 
      /*   if (firebaseAuth.getCurrentUser()!=null){
@@ -134,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
             uri = data.getData();
             Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
             videoView.setVideoURI(uri);
+            videoView.setMediaController(mediaController);
+            mediaController.setAnchorView(videoView);
             videoView.start();
 
             /*StorageReference storageRef =
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Better way to Upload video as we are pushing keys in database as well
     public void UploadVideo(){
-        final String vidname = "t1";
+        final String vidname = "t2";
         if (uri != null&&vidname!=null){
             progressBar.setVisibility(View.VISIBLE);
             StorageReference reference = storageRefrence.child(System.currentTimeMillis()+vidname);
