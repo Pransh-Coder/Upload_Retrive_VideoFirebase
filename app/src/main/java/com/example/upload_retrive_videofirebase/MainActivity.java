@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     Uri uri;
 
+    VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         uploadbtn = findViewById(R.id.upload);
         progressBar = (ProgressBar) findViewById(R.id.bar);
         showdata = findViewById(R.id.showData);
+        videoView=findViewById(R.id.video);
         member = new Member();
         storageRefrence = FirebaseStorage.getInstance().getReference("Video");
         databaseReference = FirebaseDatabase.getInstance().getReference("video");
@@ -129,10 +133,12 @@ public class MainActivity extends AppCompatActivity {
 
             uri = data.getData();
             Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
+            videoView.setVideoURI(uri);
+            videoView.start();
 
-            StorageReference storageRef =
+            /*StorageReference storageRef =
                     FirebaseStorage.getInstance().getReference();
-            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser().getUid() + "/userIntro.3gp");
+            storageRefrence = storageRef.child("/videos/" + firebaseAuth.getCurrentUser().getUid() + "/userIntro.3gp");*/
 
         }
     }
@@ -152,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Better way to Upload video as we are pushing keys in database as well
     public void UploadVideo(){
-        final String vidname = "t2";
+        final String vidname = "t1";
         if (uri != null&&vidname!=null){
             progressBar.setVisibility(View.VISIBLE);
             StorageReference reference = storageRefrence.child(System.currentTimeMillis()+vidname);
